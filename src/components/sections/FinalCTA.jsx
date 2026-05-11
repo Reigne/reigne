@@ -1,10 +1,11 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const contacts = [
   { label: 'Email', value: 'elijareigne@gmail.com', href: 'mailto:elijareigne@gmail.com' },
-  { label: 'Twitter / X', value: '@elijareigne', href: 'https://x.com/codebyreigne' },
-  { label: 'GitHub', value: 'github.com/elijareigne', href: 'https://github.com/Reigne' },
+  { label: 'Twitter / X', value: '@codebyreigne', href: 'https://x.com/codebyreigne' },
+  { label: 'GitHub', value: 'github.com/reigne', href: 'https://github.com/Reigne' },
   { label: 'LinkedIn', value: 'in/elijareigne', href: 'https://www.linkedin.com/in/elijareigne/' },
 ]
 
@@ -91,9 +92,9 @@ export default function FinalCTA() {
           </p>
 
           <div className="final-actions">
-            <a href="mailto:hello@elijareigne.com" className="btn btn-primary">
+            <Link to="/contact" className="btn btn-primary">
               Start a build <span className="arrow">→</span>
-            </a>
+            </Link>
             <a href="#work" className="btn btn-secondary">
               See more work <span className="arrow">↗</span>
             </a>
@@ -119,6 +120,8 @@ export default function FinalCTA() {
                 key={c.label}
                 className="contact-item"
                 href={c.href}
+                target="_blank"
+                rel="noreferrer"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
