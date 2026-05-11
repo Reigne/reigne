@@ -17,6 +17,8 @@ const SOCIAL_LINKS = [
   { label: 'LinkedIn', val: 'in/elijareigne', href: 'https://www.linkedin.com/in/elijareigne/' },
 ]
 
+const STACK = ['React', 'Motion', 'Node.js', 'Supabase', 'Automation', 'Figma']
+
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
@@ -30,6 +32,8 @@ export default function Contact() {
 
   const set = (field) => (e) => setForm(prev => ({ ...prev, [field]: e.target.value }))
   const setType = (type) => setForm(prev => ({ ...prev, type }))
+  const primaryContact = SOCIAL_LINKS[0]
+  const secondaryLinks = SOCIAL_LINKS.slice(1)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -47,18 +51,29 @@ export default function Contact() {
 
         {/* Header */}
         <motion.div className="sec-head" {...fadeUp(0.1)}>
+          <div className="contact-ambient" aria-hidden="true">
+            <span className="contact-light-beam" />
+          </div>
           <span className="sec-eyebrow">Contact</span>
           <h1 className="sec-title">
             Let&apos;s build something <span className="accent">together.</span>
           </h1>
           <p className="sec-copy">
-            Have a project in mind? Fill out the form and I&apos;ll get back to you within 24 hours.
+            Have a project in mind? Send the shape of it over and I&apos;ll help turn the first idea into something people can actually use.
           </p>
+          <div className="contact-stack-line" aria-label="Technologies I build with">
+            {STACK.map((item, index) => (
+              <span key={item}>
+                {item}
+                {index < STACK.length - 1 && <b aria-hidden="true">/</b>}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
         <div className="contact-layout">
 
-          {/* ── Form Card ── */}
+          {/* Form */}
           <motion.div className="contact-form-card" {...fadeUp(0.2)}>
             <AnimatePresence mode="wait">
               {submitted ? (
@@ -78,7 +93,7 @@ export default function Contact() {
                     Message sent.
                   </h3>
                   <p style={{ margin: 0, color: 'var(--faint)', fontSize: 14, maxWidth: 320 }}>
-                    Thanks for reaching out — I&apos;ll be in touch within 24 hours.
+                    Thanks for reaching out. I&apos;ll be in touch within 24 hours.
                   </p>
                   <button
                     className="btn btn-secondary"
@@ -146,8 +161,8 @@ export default function Contact() {
                     <label className="form-label">Message</label>
                     <textarea
                       className="form-textarea"
-                      rows={6}
-                      placeholder="Tell me about your project — what you're building, what you need, and any relevant timeline..."
+                      rows={5}
+                      placeholder="Tell me about your project - what you're building, what you need, and any relevant timeline..."
                       value={form.message}
                       onChange={set('message')}
                       required
@@ -168,7 +183,7 @@ export default function Contact() {
                         <LoadingSpinner /> Sending...
                       </>
                     ) : (
-                      <>Send message <span className="arrow">→</span></>
+                      <>Send message <span className="arrow" aria-hidden="true">&rarr;</span></>
                     )}
                   </motion.button>
                 </motion.form>
@@ -176,78 +191,69 @@ export default function Contact() {
             </AnimatePresence>
           </motion.div>
 
-          {/* ── Sidebar ── */}
+          {/* Sidebar */}
           <motion.div className="contact-sidebar" {...fadeUp(0.3)}>
 
-            {/* Availability */}
-            <div className="contact-side-card">
-              <div className="side-card-title">Availability</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                <span className="avail-dot" />
-                <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>Available for work</span>
+            <div className="contact-info-column">
+              <div className="info-section availability-section">
+                <div className="side-card-title">Availability</div>
+                <div className="availability-line">
+                  <span className="avail-dot" />
+                  <span>Available for selected projects</span>
+                </div>
+                <p>
+                  Based in the Philippines, building worldwide. Usually replies within a few hours.
+                </p>
+                <div className="build-note">
+                  <span>Building with</span>
+                  <strong>{STACK.join(', ')}</strong>
+                </div>
               </div>
-              <p style={{ margin: 0, fontSize: 13, color: 'var(--faint)', lineHeight: 1.6 }}>
-                Open to freelance projects, collaborations, and select full-time opportunities.
-              </p>
-              <div style={{
-                marginTop: 16,
-                padding: '10px 14px',
-                borderRadius: 8,
-                background: 'rgba(158, 227, 125, 0.06)',
-                border: '1px solid rgba(158, 227, 125, 0.2)',
-                fontFamily: 'var(--font-mono)',
-                fontSize: 11,
-                color: 'var(--green)',
-                letterSpacing: '0.06em',
-              }}>
-                ↳ Response within 24h · Philippines (GMT+8)
+
+              <div className="info-section direct-section">
+                <div className="side-card-title">Reach out directly</div>
+                <motion.a
+                  href={primaryContact.href}
+                  className="side-link primary-contact"
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.35 }}
+                >
+                  <div>
+                    <div className="sl-label">{primaryContact.label}</div>
+                    <div className="sl-val">{primaryContact.val}</div>
+                  </div>
+                  <span className="sl-arrow" aria-hidden="true">&rarr;</span>
+                </motion.a>
+                <div className="side-links">
+                  {secondaryLinks.map((link, i) => (
+                    <motion.a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="side-link secondary-contact"
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: 0.42 + i * 0.07 }}
+                    >
+                      <div>
+                        <div className="sl-label">{link.label}</div>
+                        <div className="sl-val">{link.val}</div>
+                      </div>
+                      <span className="sl-arrow" aria-hidden="true">↗</span>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="info-section human-note">
+                <p>
+                  Best projects start as a clear direction, a strange little idea, or a problem that keeps asking to be designed better.
+                </p>
               </div>
             </div>
 
-            {/* Quick links */}
-            <div className="contact-side-card">
-              <div className="side-card-title">Reach out directly</div>
-              <div className="side-links">
-                {SOCIAL_LINKS.map((link, i) => (
-                  <motion.a
-                    key={link.label}
-                    href={link.href}
-                    target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                    rel="noreferrer"
-                    className="side-link"
-                    initial={{ opacity: 0, x: 12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.35 + i * 0.07 }}
-                  >
-                    <div>
-                      <div className="sl-label">{link.label}</div>
-                      <div className="sl-val">{link.val}</div>
-                    </div>
-                    <span className="sl-arrow">↗</span>
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            {/* Stack note */}
-            <div className="contact-side-card">
-              <div className="side-card-title">What I build with</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-                {['React', 'Node.js', 'Supabase', 'Tailwind', 'Framer', 'n8n', 'Figma'].map(t => (
-                  <span key={t} style={{
-                    padding: '5px 10px',
-                    border: '1px solid var(--line)',
-                    borderRadius: 6,
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 11,
-                    color: 'var(--faint)',
-                    background: 'rgba(255,255,255,0.02)',
-                  }}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
 
           </motion.div>
         </div>
