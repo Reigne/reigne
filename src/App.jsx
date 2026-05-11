@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import BackgroundLayers from './components/layout/BackgroundLayers'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
@@ -11,16 +12,36 @@ export default function App() {
   return (
     <BrowserRouter>
       <BackgroundLayers />
-      <main>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-      </main>
+      <ScrollToTop />
+      <AppShell />
     </BrowserRouter>
+  )
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname])
+
+  return null
+}
+
+function AppShell() {
+  const { pathname } = useLocation()
+  const isContactRoute = pathname === '/contact'
+
+  return (
+    <main className={isContactRoute ? 'contact-route' : undefined}>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/work" element={<Work />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+      <Footer />
+    </main>
   )
 }
