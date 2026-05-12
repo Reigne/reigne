@@ -172,8 +172,7 @@ export default function Contact() {
                   {/* Submit */}
                   <motion.button
                     type="submit"
-                    className="btn btn-primary"
-                    style={{ alignSelf: 'flex-start', minWidth: 160 }}
+                    className="btn btn-primary contact-submit-btn"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     disabled={loading}
