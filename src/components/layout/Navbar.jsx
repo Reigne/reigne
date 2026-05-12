@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
@@ -12,11 +12,23 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+  const { pathname } = useLocation()
   const [active, setActive]   = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
   const [isCompact, setIsCompact] = useState(false)
 
   const close = () => setMenuOpen(false)
+  const onBrandClick = (e) => {
+    close()
+    if (pathname !== '/') return
+    e.preventDefault()
+    const hero = document.getElementById('hero')
+    if (hero) {
+      hero.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }
 
   useEffect(() => {
     const sections = navLinks
@@ -75,7 +87,7 @@ export default function Navbar() {
     <>
       <div className={`wrap nav-shell${isCompact ? ' is-compact' : ''}`}>
         <nav className={`nav${isCompact ? ' is-compact' : ''}`}>
-          <Link to="/" className="brand" onClick={close}>
+          <Link to="/#hero" className="brand" onClick={onBrandClick}>
             <img className="brand-mark" src="/reigne-logo.png" alt="Elija Reigne logo" />
             Reigne.
           </Link>

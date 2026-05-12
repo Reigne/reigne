@@ -85,7 +85,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="wrap hero">
+    <section className="wrap hero" id="hero">
       <motion.p
         className="hero-kicker"
         variants={fadeUp}
