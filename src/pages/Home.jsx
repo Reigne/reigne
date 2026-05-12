@@ -9,6 +9,7 @@ import Gallery from '../components/sections/Gallery'
 import Timeline from '../components/sections/Timeline'
 import Testimonials from '../components/sections/Testimonials'
 import CurrentlyBuilding from '../components/sections/CurrentlyBuilding'
+import FAQ from '../components/sections/FAQ'
 import FinalCTA from '../components/sections/FinalCTA'
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
       <Timeline />
       <Testimonials />
       <CurrentlyBuilding />
+      <FAQ />
       <FinalCTA />
     </>
   )
