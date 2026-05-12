@@ -100,6 +100,10 @@ export default function FinalCTA() {
             </a>
           </div>
 
+          <p className="final-budget-note">
+            Have a budget in mind? Feel free to send it over.
+          </p>
+
           {/* Proof line — subtle authority signal */}
           <p style={{
             marginTop: 20,
