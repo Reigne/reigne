@@ -7,12 +7,14 @@ const navLinks = [
   { label: 'Process', href: '/#process',  id: 'process'   },
   { label: 'Stack',   href: '/#stack',    id: 'stack'     },
   { label: 'Journey', href: '/#timeline', id: 'timeline'  },
+  { label: 'FAQ',     href: '/#faq',      id: 'faq'       },
   { label: 'Contact', href: '/#contact',  id: 'contact'   },
 ]
 
 export default function Navbar() {
   const [active, setActive]   = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isCompact, setIsCompact] = useState(false)
 
   const close = () => setMenuOpen(false)
 
@@ -45,6 +47,24 @@ export default function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    const onScrollOrResize = () => {
+      if (window.innerWidth <= 820) {
+        setIsCompact(false)
+        return
+      }
+      setIsCompact(window.scrollY > 20)
+    }
+
+    onScrollOrResize()
+    window.addEventListener('scroll', onScrollOrResize, { passive: true })
+    window.addEventListener('resize', onScrollOrResize)
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize)
+      window.removeEventListener('resize', onScrollOrResize)
+    }
+  }, [])
+
   // Prevent body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -53,8 +73,8 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="wrap nav-shell">
-        <nav className="nav">
+      <div className={`wrap nav-shell${isCompact ? ' is-compact' : ''}`}>
+        <nav className={`nav${isCompact ? ' is-compact' : ''}`}>
           <Link to="/" className="brand" onClick={close}>
             <img className="brand-mark" src="/reigne-logo.png" alt="Elija Reigne logo" />
             Reigne.
