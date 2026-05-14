@@ -3,10 +3,12 @@ import { useEffect } from 'react'
 import BackgroundLayers from './components/layout/BackgroundLayers'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
+import FloatingCTA from './components/ui/FloatingCTA'
 import Home from './pages/Home'
 import Work from './pages/Work'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -40,8 +42,10 @@ function AppShell() {
         <Route path="/work" element={<Work />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+      {!isContactRoute && <FloatingCTA />}
     </main>
   )
 }
