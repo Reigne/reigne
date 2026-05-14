@@ -18,6 +18,7 @@ const SOCIAL_LINKS = [
 ]
 
 const STACK = ['React', 'Motion', 'Node.js', 'Supabase', 'Automation', 'Figma']
+const CONTACT_WEBHOOK_URL = import.meta.env.VITE_CONTACT_WEBHOOK_URL
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -29,6 +30,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', type: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const set = (field) => (e) => setForm(prev => ({ ...prev, [field]: e.target.value }))
   const setType = (type) => setForm(prev => ({ ...prev, type }))
@@ -39,10 +41,31 @@ export default function Contact() {
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
     setLoading(true)
-    // Wire up to Formspree / EmailJS / your API here
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setSubmitted(true)
+    setSubmitError('')
+
+    try {
+      const response = await fetch(CONTACT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          source: 'reigne-portfolio-3-contact-form',
+          submittedAt: new Date().toISOString(),
+        }),
+      })
+
+      const payload = await response.json().catch(() => ({}))
+      if (!response.ok) {
+        throw new Error(payload?.error || 'Unable to send your message right now.')
+      }
+
+      setSubmitted(true)
+      setForm({ name: '', email: '', type: '', message: '' })
+    } catch (error) {
+      setSubmitError(error?.message || 'Unable to send your message right now.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -98,7 +121,11 @@ export default function Contact() {
                   <button
                     className="btn btn-secondary"
                     style={{ marginTop: 8 }}
-                    onClick={() => { setSubmitted(false); setForm({ name: '', email: '', type: '', message: '' }) }}
+                    onClick={() => {
+                      setSubmitted(false)
+                      setSubmitError('')
+                      setForm({ name: '', email: '', type: '', message: '' })
+                    }}
                   >
                     Send another
                   </button>
@@ -168,6 +195,15 @@ export default function Contact() {
                       required
                     />
                   </div>
+
+                  {submitError && (
+                    <p
+                      role="alert"
+                      style={{ margin: 0, color: '#ff9b84', fontSize: 13, lineHeight: 1.5 }}
+                    >
+                      {submitError}
+                    </p>
+                  )}
 
                   {/* Submit */}
                   <motion.button
