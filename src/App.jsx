@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import BackgroundLayers from './components/layout/BackgroundLayers'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
@@ -16,6 +17,7 @@ export default function App() {
       <BackgroundLayers />
       <ScrollToTop />
       <AppShell />
+      <Analytics />
     </BrowserRouter>
   )
 }
