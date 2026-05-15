@@ -44,6 +44,7 @@ export const projects = [
     desc: 'A frontend system designed for schools to automate grading, student records, and academic workflows.',
     features: ['Form 137', 'ECR System', 'School Forms', 'Dynamic Student Data', 'Excel Export', 'Automated Grade Processing'],
     why: 'Replaces hours of manual paperwork with a calm, predictable interface teachers actually want to use.',
+    url: 'https://www.361079tapinacshs.com/',
     mock: 'school',
     flip: true,
   },
@@ -57,6 +58,7 @@ export const projects = [
     features: ['Responsive Layout', 'Modern UI Design', 'Brand Identity', 'Clean Typography', 'Performance Optimized', 'Mobile-First'],
     why: 'A strong first impression online — built to position Capstone Solutions as a credible, professional brand in their market.',
     screenshot: '/projects/websites/capstone-solutions-portfolio.jpeg',
+    url: 'https://capstonesolutions-portfolio.vercel.app/',
     flip: false,
   },
   {
@@ -69,6 +71,7 @@ export const projects = [
     features: ['Art Gallery Showcase', 'Commission Pricing', 'Responsive Design', 'Clean Visual Layout', 'Mobile-First'],
     why: 'Turns an artist\'s work into a storefront — so fans become clients and commissions become consistent income.',
     screenshot: '/projects/websites/william-darts.png',
+    url: 'https://williartz.vercel.app/',
     flip: true,
   },
   {
@@ -81,6 +84,7 @@ export const projects = [
     features: ['Portfolio Grid', 'Project Showcase', 'About Section', 'Clean Typography', 'Responsive Layout'],
     why: 'A curated digital presence that lets the work speak — not the template.',
     screenshot: '/projects/websites/gia-portfolio.png',
+    url: 'https://gia-portfolio-six.vercel.app/',
     flip: false,
   },
   {

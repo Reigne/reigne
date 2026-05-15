@@ -1,9 +1,9 @@
-export default function MockSchool() {
+export default function MockSchool({ url = 'school.app / grading' }) {
   return (
     <div className="mock">
       <div className="mock-bar">
         <div className="dots"><span className="r" /><span className="y" /><span className="g" /></div>
-        <div className="url">school.app / grading</div>
+        <div className="url">{url}</div>
       </div>
       <div className="mock-body">
         <div className="mock-table-2">

@@ -1072,6 +1072,12 @@ section.bay { padding: 100px 0; position: relative; }
   color: var(--soft); font-size: 13.5px; line-height: 1.55; font-style: italic;
 }
 .proj-why strong { color: var(--orange-2); font-style: normal; font-weight: 700; margin-right: 6px; }
+.proj-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.proj-link {
+  height: 42px;
+  padding: 0 16px;
+  font-size: 12.5px;
+}
 .proj-visual {
   position: relative; min-height: 460px;
   background: url("/backgrounds/hero4.png") center 42% / cover no-repeat;

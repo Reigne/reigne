@@ -11,6 +11,16 @@ const mockMap = { gateway: MockGateway, inbox: MockInbox, builder: MockBuilder, 
 
 const DEFAULT_SHOWN = 4
 
+function formatProjectUrl(url) {
+  if (!url) return 'capstone-solutions.com'
+
+  try {
+    return new URL(url).host
+  } catch {
+    return url
+  }
+}
+
 function ScreenshotMock({ src, alt, url }) {
   return (
     <div className="mock" style={{ background: 'rgba(12,12,18,0.92)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--line-2)', width: '100%' }}>
@@ -18,7 +28,7 @@ function ScreenshotMock({ src, alt, url }) {
         <div className="dots">
           <span className="r" /><span className="y" /><span className="g" />
         </div>
-        <div className="url">{url || 'capstone-solutions.com'}</div>
+        <div className="url">{formatProjectUrl(url)}</div>
       </div>
       <img src={src} alt={alt} style={{ width: '100%', display: 'block', maxHeight: 320, objectFit: 'cover', objectPosition: 'top' }} />
     </div>
@@ -65,11 +75,18 @@ export default function Projects() {
                   <div className="proj-why">
                     <strong>Why it matters →</strong> {p.why}
                   </div>
+                  {p.url && (
+                    <div className="proj-actions">
+                      <a className="btn btn-secondary proj-link" href={p.url} target="_blank" rel="noreferrer">
+                        Visit live site <span className="arrow">-&gt;</span>
+                      </a>
+                    </div>
+                  )}
                 </div>
                 <div className="proj-visual">
                   {p.screenshot
                     ? <ScreenshotMock src={p.screenshot} alt={p.name} url={p.url} />
-                    : <Mock />
+                    : <Mock url={formatProjectUrl(p.url)} />
                   }
                 </div>
               </motion.article>
